@@ -1,9 +1,9 @@
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-using RentalCar.ApiS.Data.Models;
+using RentalCar.Api.Data.Models;
 
-namespace RentalCar.ApiS.Data.Database;
+namespace RentalCar.Api.Data.Database;
 
 public class RentalDatabase(IMongoDatabase database)
 {
@@ -17,9 +17,8 @@ public class RentalDatabase(IMongoDatabase database)
 
     public async Task<Rental> GetLastRentalAsync() =>  
         await _rentalsCollection
-            .Find(FilterDefinition<Rental>.Empty)
-            .Sort(Builders<Rental>.Sort.Descending(r => r.CreatedAt))
-            .Limit(1)
+            .AsQueryable()
+            .OrderByDescending(x => x.CreatedAt)
             .FirstOrDefaultAsync()
             .ConfigureAwait(false);
         
@@ -28,6 +27,8 @@ public async Task UpsertRental(Rental rentalDocument)
     {
         var filter = Builders<Rental>.Filter.Eq(x => x.Id, rentalDocument.Id);
         var options = new ReplaceOptions() { IsUpsert = true };
+        
+        rentalDocument.LastModifiedAt = DateTime.Now;
         await _rentalsCollection.ReplaceOneAsync(filter, rentalDocument, options).ConfigureAwait(false);
     } 
 

@@ -12,4 +12,8 @@ var rentalCarApi = builder.AddProject<Projects.RentalCar_Api>("api")
     .WithReference(mongoDb)
     .WaitFor(mongoDb);
 
+builder.AddProject<Projects.RentalCar_ConsoleApp>("console")
+    .WithReference(mongoDb) // This links it to the same MongoDB as the API
+    .WaitFor(mongoDb);
+
 builder.Build().Run();

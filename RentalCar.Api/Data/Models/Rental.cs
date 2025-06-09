@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices.JavaScript;
 
-namespace RentalCar.ApiS.Data.Models;
+namespace RentalCar.Api.Data.Models;
 
 
     public enum RentalCarCategory
@@ -21,12 +21,10 @@ namespace RentalCar.ApiS.Data.Models;
         public DateTime TimeOfPickup { get; init; }
         public int KmAtPickup { get; init; }
         
-        public DateTime TimeOfReturn { get; init; }
-        public int KmAtReturn { get; init; }
+        public DateTime TimeOfReturn { get; set; }
+        public int KmAtReturn { get; set; }
 
-        public bool IsReturned => TimeOfReturn != default;
-        
         public DateTime CreatedAt{ get; init; }
-        public DateTime LastModifiedAt{ get; init; }
+        public DateTime LastModifiedAt{ get; set; }
     }
 

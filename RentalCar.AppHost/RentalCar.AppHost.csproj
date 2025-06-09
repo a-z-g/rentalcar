@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\RentalCar.Api\RentalCar.Api.csproj" />
+        <ProjectReference Include="..\RentalCar.ConsoleApp\RentalCar.ConsoleApp.csproj" />
     </ItemGroup>
 
     <ItemGroup>
